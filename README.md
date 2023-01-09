@@ -7,8 +7,8 @@ The repository assists you to conduct an analysis in various pretrained models i
 
 ## Install
 ```bash
-git clone https://github.com/KubeSoup/multilingual_bias.git
-cd multilingual_bias
+git clone https://github.com/slds-lmu/stereotypes-multi.git
+cd stereotypes-multi
 python -m pip install -r requirements.txt
 ```
 
