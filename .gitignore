@@ -1,0 +1,10 @@
+create_dataset/manual_fixes/*
+*.DS_Store
+*__pycache__
+*.idea
+*/.ipynb_checkpoints/
+*venv_cuda
+*venv_m1max
+*.pth
+/code/nsp_training/saved_datasets/
+/code/nsp_training/wandb/
