@@ -1,9 +1,6 @@
-# How Different is Stereotypical Bias in Different Languages? Analysis of Multilingual Language Models
-> I. Tolga Ozturk, Rostislav Nedelchev, Dr. Matthias Assenmacher, Prof. Christian Heumann
+# ACL 2023 submission: _How Different is Stereotypical Bias across Languages?_
 
-This repository contains an extensible codebase to measure stereotypical bias on pretrained models, both in monolingual and multilingual models with different languages (e.g. English, German), as well as code to replicate our results. 
-It allows you to create your own dataset in the language that you are interested in, and then obtain the bias evaluation for that language on your preferred pre-trained model. 
-The repository assists you to conduct an analysis in various pretrained models in different architectures, encoder based (e.g. BERT), decoder based (e.g. GPT-2), encoder-decoder based (e.g. T5).
+This repository contains the codebase to measure stereotypical bias in pretrained monolingual and multilingual models for different languages, as well as the code to replicate our results. It allows to create one's own dataset in the language of interest, and then obtain the bias evaluation for that language on your preferred pre-trained model. The repository assists in conducting an analysis for various pretrained models of different architectures, i.e. encoder-based (e.g. BERT), decoder-based (e.g. GPT-2), and encoder-decoder based (e.g. T5).
 
 ## Install
 ```bash
@@ -13,13 +10,14 @@ python -m pip install -r requirements.txt
 ```
 
 ## Experiments
-There are 3 main steps to be done:
 
-### 1. Creating your own dataset
-One can create their own dataset in the language that they interested in.
-We have provided English and German versions in the respective folders (`create_dataset/data/intersentence` and `create_dataset/data/intrasentence`).
-Hence, **you can skip to Step 2** if you would work in English or German.
-The pickled data files provided version 1.0 and 2.0 are the versions just after the translation without any pre-processing.
+There are 3 main steps:
+
+### 1. Creating the data set
+
+One can create a custom data set in the language that one is interested in.
+We provided the English, German, French, Spanish and Turkish versions in the respective folders (`create_dataset/data/intersentence` and `create_dataset/data/intrasentence`). Hence, for these languages **Step 2** can be directly applied.
+The pickled data files, provided in version 1.0 and 2.0, are the versions just after the translation without any pre-processing.
 Therefore, it's only useful if you want to do a different pre-processing than us.
 The main English dataset is in `create_dataset/data/dev.json` and one can translate the dataset and form an appropriate format.
 The dataset used is directly copied from [StereoSet](https://github.com/moinnadeem/stereoset/).
@@ -27,6 +25,7 @@ The dataset used is directly copied from [StereoSet](https://github.com/moinnade
 To create your own dataset and more details please **follow the instructions in the `create_dataset` folder**
 
 ### 2. Acquiring probabilities for candidate words/sentences
+
 After creating the dataset in the pandas format by following Step 1, the probabilities for each candidate can be obtained in this step.  The results of this step (predictions) will be saved in the `results/predictions` folder.
 We have provided all the prediction files that we used,
 therefore, **you can skip to Step 3** if you would work on the same model with the same dataset.
@@ -52,11 +51,6 @@ After completing the Step 2 and obtaining the predictions file, one can measure 
 
 To obtain the final scores and for more details about it please **follow the instructions in the `code` folder.**
 
-
-
 ## Acknowledgements
 This repository makes use of code from the following repositories:
 * [StereoSet: Measuring Stereotypical Bias in Pre-trained Language Models](https://github.com/moinnadeem/stereoset)
-
-We acknowledge the support of the following projects and organizations: OpenGPT-X (BMWK 68GX21007C), Alexander Thamm GmbH 
-and Ludwig-Maximilians-Universität München.
