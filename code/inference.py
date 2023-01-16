@@ -14,9 +14,9 @@ def parse_args():
     """ Parses the command line arguments. """
     pretrained_model_choices = ['bert-base-uncased', 'bert-base-cased', "bert-large-uncased-whole-word-masking",
                                 'bert-large-uncased', 'bert-large-cased', "bert-base-multilingual-cased",
-                                'gpt2', 'gpt2-medium', 'gpt2-large', 'miguelvictor/multilingual-gpt2-large',
+                                'gpt2', 'gpt2-medium', 'gpt2-large',
                                 't5-small', 't5-base', 't5-large', 'THUMT/mGPT', 'google/mt5-base',
-                                'dbmdz/bert-base-german-cased', 'dbmdz/bert-base-turkish-cased',
+                                'dbmdz/bert-base-german-cased', 'bert-base-german-cased', 'dbmdz/bert-base-turkish-cased',
                                 'dbmdz/german-gpt2', 'redrussianarmy/gpt2-turkish-cased',
                                 'GermanT5/t5-efficient-gc4-german-base-nl36',
                                 'flax-community/spanish-t5-small', 'dccuchile/bert-base-spanish-wwm-cased','PlanTL-GOB-ES/gpt2-base-bne',
