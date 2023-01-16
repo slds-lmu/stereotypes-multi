@@ -4,7 +4,7 @@ This repository contains the codebase to measure stereotypical bias in pretraine
 
 ## Install
 ```bash
-git clone https://github.com/slds-lmu/stereotypes-multi.git
+git clone <this repository> (original path deleted for now (due to anonymization)
 cd stereotypes-multi
 python -m pip install -r requirements.txt
 ```
