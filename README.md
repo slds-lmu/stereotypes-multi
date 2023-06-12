@@ -1,4 +1,4 @@
-# ACL 2023 submission: _How Different is Stereotypical Bias across Languages?_
+# ECML Workshop 2023 submission: _How Different is Stereotypical Bias across Languages?_
 
 This repository contains the codebase to measure stereotypical bias in pretrained monolingual and multilingual models for different languages, as well as the code to replicate our results. It allows to create one's own dataset in the language of interest, and then obtain the bias evaluation for that language on your preferred pre-trained model. The repository assists in conducting an analysis for various pretrained models of different architectures, i.e. encoder-based (e.g. BERT), decoder-based (e.g. GPT-2), and encoder-decoder based (e.g. T5).
 
