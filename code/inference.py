@@ -73,7 +73,7 @@ def model_df_init(model_name, pretrained_class, device, tokenizer_name, df_file,
     return model, tokenizer, df
 
 
-def main(args):
+def inference(args):
     results = {}
     device, batch_size, num_workers, case_no = args.device, args.batch_size, args.num_workers, args.case_no
     if not args.skip_intrasentence:
@@ -105,12 +105,10 @@ def main(args):
                 args.pretrained_class)
     return results
 
-
-if __name__ == "__main__":
-    args = parse_args()
+def main(args):
+    inference(args)
     language = args.intrasentence_df_file[-6:-4] if args.intrasentence_df_file is not None \
         else args.intersentence_df_file[-6:-4]
-    results = main(args)
     if not os.path.isdir(os.path.join("..", "results", 'predictions')):
         os.mkdir(os.path.join("..", "results", 'predictions'))
     intersentence_model_name = args.intersentence_model + "_" + args.case_no \
@@ -118,7 +116,12 @@ if __name__ == "__main__":
     intersentence_model_name = "" if args.skip_intersentence is True else intersentence_model_name
     intrasentence_model_name = "" if args.skip_intrasentence is True else args.intrasentence_model
     pretrained_class_name = args.pretrained_class.replace("/", "_")
-    result_path = os.path.join("..", "results", "predictions", pretrained_class_name + "_" + intrasentence_model_name + "_" +
+    result_path = os.path.join("..", "results", "predictions",
+                               pretrained_class_name + "_" + intrasentence_model_name + "_" +
                                intersentence_model_name + "_" + language + ".json")
     with open(result_path, "w+") as f:
         json.dump(results, f, indent=2)
+
+if __name__ == "__main__":
+    args = parse_args()
+    results = main(args)

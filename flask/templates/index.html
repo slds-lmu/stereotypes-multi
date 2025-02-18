@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 95%;
+    }
+    .content {
+      display: flex;
+      width: 100%;
+    }
+    .form-container {
+      max-width: 300px;
+      margin-right: 20px;
+      margin-top: 50px;
+    }
+
+    .form-container label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .form-container input, .form-container select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .form-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007BFF;
+      border: none;
+      color: white;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .form-container button:hover {
+      background-color: #0056b3;
+    }
+    .output-container {
+      max-width: 400px;
+    }
+    .output {
+      white-space: pre-wrap;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-top: 20px;
+      background: #f9f9f9;
+      border-radius: 4px;
+    }
+    .right-container {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1; /* Allow the container to grow and fill the available space */
+      width: 100%; /* Ensure it takes the full width */
+    }
+    .title-logo-container {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .title-logo-container h1 {
+      margin: 0 auto; /* Center the h1 element */
+    }
+    .logo {
+      width: 200px;
+      height: 150px;
+    }
+    .image-container {
+      display: flex;
+      flex-direction: column; /* This makes the elements inside the container stack vertically */
+      align-items: center;
+      padding: 20px;
+    }
+    .image-container img {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <div class="form-container">
+        <form method="post">
+          <label for="pretrained_model">LLM Type:</label>
+          <select name="pretrained_model" id="pretrained_model">
+            {% for choice in pretrained_model_choices %}
+              <option value="{{ choice }}" {% if pretrained_model == choice %}selected{% endif %}>{{ choice }}</option>
+            {% endfor %}
+          </select><br>
+
+          <label for="language">Language:</label>
+        <select name="language" id="language">
+          <option value="en" {% if language == 'en' %}selected{% endif %}>English</option>
+          <option value="de" {% if language == 'de' %}selected{% endif %}>German</option>
+          <option value="es" {% if language == 'es' %}selected{% endif %}>Spanish</option>
+          <option value="fr" {% if language == 'fr' %}selected{% endif %}>French</option>
+          <option value="tr" {% if language == 'tr' %}selected{% endif %}>Turkish</option>
+        </select><br>
+
+        <label for="test_type">Test Type:</label>
+        <select name="test_type" id="test_type">
+          <option value="intrasentence" {% if test_type == 'intrasentence' %}selected{% endif %}>Intrasentence Test</option>
+          <option value="intersentence" {% if test_type == 'intersentence' %}selected{% endif %}>Intersentence Test</option>
+          <option value="overall" {% if test_type == 'overall' %}selected{% endif %}>Both Tests</option>
+        </select><br>
+
+        <input type="checkbox" id="skip_inference" name="skip_inference" checked>
+        <label for="skip_inference">Skip Inference</label><br>
+
+        <label for="output_file">Output File:</label>
+        <input type="text" id="output_file" name="output_file" value="test.xlsx"><br>
+
+        <label for="case_no">Case No:</label>
+        <input type="text" id="case_no" name="case_no" value="{{ case_no }}"><br>
+
+        <label for="nsp_model_path">NSP Model Path:</label>
+        <input type="text" id="nsp_model_path" value="{{ nsp_model_path }}"><br>
+
+        <label for="tokenizer_name">Tokenizer Name:</label>
+        <select name="tokenizer_name" id="tokenizer_name">
+          {% for choice in tokenizer_choices %}
+            <option value="{{ choice }}" {% if tokenizer_name == choice %}selected{% endif %}>{{ choice }}</option>
+          {% endfor %}
+        </select><br>
+
+        <label for="device">Device:</label>
+        <select name="device" id="device">
+          <option value="cpu" {% if device == 'cpu' %}selected{% endif %}>CPU</option>
+          <option value="cuda" {% if device == 'cuda' %}selected{% endif %}>CUDA</option>
+        </select><br>
+
+        <label for="batch_size">Batch Size:</label>
+        <input type="number" id="batch_size" name="batch_size" value=1><br>
+
+        <label for="num_workers">Number of Workers:</label>
+        <input type="number" id="num_workers" name="num_workers" value=1><br>
+
+        <button type="submit">Run</button>
+      </form>
+
+      {% if output %}
+        <div class="output">
+          <h2>Output</h2>
+          <pre>{{ output }}</pre>
+        </div>
+      {% endif %}
+    </div>
+    <div class="right-container">
+      <div class="title-logo-container">
+        <h1>LLM Bias Measurement</h1>
+        <img src="static/logo.jpeg" alt="Logo" class="logo">
+      </div>
+      <div class="image-container">
+        {% if image_exists %}
+          <img src="{{ url_for('static', filename='scatter_plot.png') }}" alt="Scatter Plot">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>
